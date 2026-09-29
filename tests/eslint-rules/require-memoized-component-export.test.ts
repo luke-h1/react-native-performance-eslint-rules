@@ -1,11 +1,9 @@
 import rule from "../../lib/eslint-rules/require-memoized-component-export.js";
-import { createRuleTester } from "../rule-tester";
-
-const ruleTester = createRuleTester();
+import { runRuleTests } from "../rule-tester";
 
 const filename = "src/components/Card.tsx";
 
-ruleTester.run("require-memoized-component-export", rule, {
+runRuleTests("require-memoized-component-export", rule, {
   valid: [
     // the sanctioned shape
     {

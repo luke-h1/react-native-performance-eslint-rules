@@ -5,9 +5,11 @@ Performance lint rules for React Native, written as ESLint rules and ast-grep ru
 ## Layout
 
 ```
-lib/eslint-rules/        ESLint rules (CommonJS, one rule per file)
+lib/index.js             plugin entry (rn-perf) shared by ESLint and oxlint
+lib/package.json         marks lib/ as CommonJS so users can copy it into ESM projects
+lib/eslint-rules/        ESLint rules (CommonJS, one rule per file), also run under oxlint
 lib/ast-grep-rules/      ast-grep rules (YAML, usually a -ts and -tsx pair per rule)
-tests/eslint-rules/      vitest + RuleTester, one test file per rule
+tests/eslint-rules/      vitest, one test file per rule, run under both ESLint and oxlint RuleTesters
 tests/ast-grep-rules/    ast-grep test cases (<rule-id>-test.yml) and __snapshots__/
 sgconfig.yml             points ast-grep at the rule and test dirs
 example/                 Expo app using every rule plus the react-doctor ESLint presets
@@ -18,15 +20,16 @@ example/                 Expo app using every rule plus the react-doctor ESLint 
 Root:
 
 ```bash
-bun run test                                      # ESLint rule tests (vitest)
+bun run test                                      # ESLint rule tests under ESLint + oxlint (vitest)
 example/node_modules/.bin/ast-grep test           # ast-grep rule tests + snapshots
 ```
 
 In `example/`:
 
 ```bash
-bun run lint            # ESLint + ast-grep
+bun run lint            # ESLint + oxlint + ast-grep
 bun run lint:eslint     # ESLint only
+bun run lint:oxlint     # oxlint only
 bun run lint:ast-grep   # ast-grep only
 bun run doctor          # react-doctor CLI scan
 bun run typecheck
@@ -94,6 +97,6 @@ Flags layout props (`width`, `height`, `top`/`left`/..., `margin*`, `padding*`, 
 ## Working on the rules
 
 - Keep `README.md` in sync. Every rule has a row in "Rules at a glance" and its own section explaining why it exists, with bad and good examples.
-- ESLint rule: add `lib/eslint-rules/<name>.js` with `meta.docs.description` and `meta.messages`, add `tests/eslint-rules/<name>.test.ts` using `createRuleTester` from `tests/rule-tester`, then register it in the `rnPerf` plugin in `example/eslint.config.js`.
+- ESLint rule: add `lib/eslint-rules/<name>.js` with `meta.docs.description` and `meta.messages`, add `tests/eslint-rules/<name>.test.ts` using `runRuleTests` from `tests/rule-tester` (runs ESLint and oxlint), register it in `lib/index.js`, then enable it in both `example/eslint.config.js` and `example/.oxlintrc.json`. Stick to APIs oxlint's JS plugin support covers (e.g. `context.filename`, not `context.getFilename()`).
 - ast-grep rule: add a `-ts.yml` and `-tsx.yml` pair when the pattern can appear in both, with `message` (one line) and `note` (the why and the fix). Add `tests/ast-grep-rules/<id>-test.yml` with `valid` and `invalid` cases, then run `ast-grep test --update-all` to write snapshots and review them. `example/sgconfig.yml` picks up new rules automatically.
 - Every test file must match a rule `id`. Delete tests and snapshots when you delete a rule.

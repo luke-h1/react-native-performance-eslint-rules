@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "jsPlugins": ["../lib/index.js"],
+  "ignorePatterns": ["dist/*"],
+  "overrides": [
+    {
+      "files": ["src/**/*.{ts,tsx}"],
+      "rules": {
+        "rn-perf/no-index-barrel": "error",
+        "rn-perf/require-memoized-component-export": "error"
+      }
+    }
+  ]
+}

@@ -1,11 +1,9 @@
 import rule from '../../lib/eslint-rules/no-index-barrel.js';
-import { createRuleTester } from '../rule-tester';
-
-const ruleTester = createRuleTester();
+import { runRuleTests } from '../rule-tester';
 
 const barrel = "export * from './Button';\nexport * from './Card';";
 
-ruleTester.run('no-index-barrel', rule, {
+runRuleTests('no-index-barrel', rule, {
   valid: [
     { code: barrel, filename: 'src/components/Button.ts' },
     { code: barrel, filename: 'src/components/index.tsx' },
