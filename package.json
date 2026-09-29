@@ -1,0 +1,44 @@
+{
+  "name": "react-native-performance-eslint-rules",
+  "description": "Eslint rules for building performant react-native apps",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luke-h1/react-native-performance-eslint-rules.git"
+  },
+  "homepage": "https://github.com/luke-h1/react-native-performance-eslint-rules#readme",
+  "bugs": "https://github.com/luke-h1/react-native-performance-eslint-rules/issues",
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin",
+    "react-native",
+    "expo",
+    "performance"
+  ],
+  "files": [
+    "lib",
+    "docs",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "devDependencies": {
+    "@types/eslint": "^9.6.1",
+    "@types/node": "^22.0.0",
+    "eslint": "^10.4.1",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.0.0",
+    "vitest": "^3.0.0",
+    "eslint-plugin-react-doctor": "^0.9.14"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  }
+}

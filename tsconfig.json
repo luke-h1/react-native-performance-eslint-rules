@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es2023",
+    "module": "node20",
+    "lib": ["es2023"],
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "types": ["node"],
+  },
+  "include": ["lib", "tests", "*.mjs", "*.js"],
+}
